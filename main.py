@@ -4,9 +4,11 @@ from keras.models import model_from_json
 from random import randint
 from readdb import update_db,fetch
 from pdfgenerate import create_pdf
+from preprocessing import skew_correction,rescaleFrame,skew_correction
 img =cv2.imread('sam2.jpg',cv2.IMREAD_GRAYSCALE)
 img=255-img
 ret3,img= cv2.threshold(img,150,255,cv2.THRESH_BINARY)
+img=skew_correction(img)
 proj = np.sum(img,1)
 m=0
 h=0
@@ -50,7 +52,7 @@ if len(cont_upper) !=0:
     x=np.expand_dims(x,0)
     y=np.argmax(loaded_model.predict(x), axis=-1)
     mark=mark+str(y[0])   
-id= 10
+id= 9
 update_db(id,mark)
 all_info=fetch(id)
 create_pdf(all_info)
