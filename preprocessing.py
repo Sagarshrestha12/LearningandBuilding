@@ -2,7 +2,15 @@ import cv2
 import numpy as np
 import argparse
 import csv
+from keras.models import model_from_json
+
 import sqlite3
+def sort_contours(cnts,reverse = False):
+    i = 0
+    boundingBoxes = [cv2.boundingRect(c) for c in cnts]
+    (cnts, boundingBoxes) = zip(*sorted(zip(cnts, boundingBoxes),
+                                        key=lambda b: b[1][i], reverse=reverse))
+    return cnts
 def skew_correction(thresh):
     #image =cv2.imread(filename)
     # This is done by averaging the three chanel value
@@ -33,6 +41,7 @@ def rescaleFrame(frame,scale =0.75):
     dimensions =(height,width)
     return cv2.resize(frame,dimensions,interpolation=cv2.INTER_AREA)
 def color_detection(img):
+    ret3,img= cv2.threshold(img,150,255,cv2.THRESH_BINARY)
     hsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
     lower_red = np.array([0,120,70])
     upper_red = np.array([10,255,255])
@@ -43,9 +52,10 @@ def color_detection(img):
     mask= mask1+mask2
     output = cv2.bitwise_and(img, img, mask = mask)
     output=cv2.cvtColor(output,cv2.COLOR_BGR2GRAY)
-    output = cv2.threshold(output, 1, 255,
+    output = cv2.threshold(output, 250, 255,
         cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
     return output
+
 def noise_reduction(img):
     kernel=np.ones((5,5),np.uint8)
     closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
@@ -70,12 +80,7 @@ def segmentation(img):
     cont_upper,_ = cv2.findContours(upper, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     lower = Img[r[0][0]+5:,:]
     cont_lower, _  = cv2.findContours(lower, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-def sort_contours(cnts,reverse = False):
-    i = 0
-    boundingBoxes = [cv2.boundingRect(c) for c in cnts]
-    (cnts, boundingBoxes) = zip(*sorted(zip(cnts, boundingBoxes),
-                                        key=lambda b: b[1][i], reverse=reverse))
-    return cnts
+
 def det(img):
     row,cols=img.shape[0],img.shape[1]
     for i in range(row):

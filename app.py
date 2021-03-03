@@ -4,7 +4,7 @@ from keras.models import model_from_json
 from random import randint
 from readdb import update_db,fetch
 from pdfgenerate import create_pdf
-from preprocessing import skew_correction,rescaleFrame,skew_correction
+from preprocessing import skew_correction,rescaleFrame,color_detection
 from flask import Flask,request, jsonify, render_template, Response, send_file, abort
 import os
 app = Flask(__name__)
@@ -16,7 +16,12 @@ def home():
 
 @app.route('/predict',methods=['POST'])
 def predict():
-    img =cv2.imread('sam2.jpg',cv2.IMREAD_GRAYSCALE)
+    image = request.files["images"]
+    image_name = image.filename
+    image.save(os.path.join(os.getcwd(), image_name))
+    img = cv2.imread(image_name,cv2.IMREAD_GRAYSCALE)
+    #img=color_detection(img)
+    #cv2.imshow('dd',img)
     img=255-img
     ret3,img= cv2.threshold(img,150,255,cv2.THRESH_BINARY)
     img=skew_correction(img)
@@ -35,8 +40,9 @@ def predict():
     hori_img=img[m:h,0:img.shape[1]]
     kernel = np.ones((5,5),np.uint8)
     upper=hori_img
+
     cont_upper,_ = cv2.findContours(upper, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    cont_lower, _  = cv2.findContours(upper, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    #cont_lower, _  = cv2.findContours(upper, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     def sort_contours(cnts,reverse = False):
         i = 0
         boundingBoxes = [cv2.boundingRect(c) for c in cnts]
