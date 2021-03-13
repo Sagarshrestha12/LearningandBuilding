@@ -1,5 +1,7 @@
 # Handwritten_digit_recognition Using CNN and Opencv
 This project focuses on recognising string of handwritten digits inputed as an image with the help of deeplearning algorithm of Convolutional Neural Network for training the model and opencv for preprocessing the raw inputted image of digits.
+About whole project ,you can find the documentation in finalreport.docx file
+
 ## Install
 This project requires Python and the following Python libraries installed:
 * NumPy
