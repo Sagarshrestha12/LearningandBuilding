@@ -2,6 +2,7 @@
 This project focuses on recognising string of handwritten digits inputed as an image with the help of deeplearning algorithm of Convolutional Neural Network for training the model and opencv for preprocessing the raw inputted image of digits.
 About whole project ,you can find the documentation in finalreport.docx file
 
+### YOU COULD FIND DOCUMENTATION OF THIS PROJECT ON FILE NAMED Sagar-editreport.docx
 ## Install
 This project requires Python and the following Python libraries installed:
 * NumPy
@@ -28,18 +29,6 @@ and each digit from the image is segmented and feeded to trained model and then 
 * batch size :- 32
 * Accuracy :- 0.94
 * Loss :- 0.044138
-#### Actual Image
-![Capture](https://user-images.githubusercontent.com/46081301/60577825-be524600-9d9d-11e9-8f91-5af5be32fa86.PNG)
-#### Blurred Image
-![blurred](https://user-images.githubusercontent.com/46081301/60577822-bdb9af80-9d9d-11e9-9499-7825a88a53ff.PNG)
-#### After Threshold
-![threshold](https://user-images.githubusercontent.com/46081301/60577827-beeadc80-9d9d-11e9-8a72-699cc44b7746.PNG)
-#### Canny Edge detection
-![canny](https://user-images.githubusercontent.com/46081301/60577824-be524600-9d9d-11e9-840c-8bb6811e1fe6.PNG)
-#### Contours
-![boundry](https://user-images.githubusercontent.com/46081301/60577823-bdb9af80-9d9d-11e9-888a-1a2a2984019d.PNG)
-#### Final Prediction
-![predicted](https://user-images.githubusercontent.com/46081301/60577826-beeadc80-9d9d-11e9-9f44-a910ebe315fb.PNG)
  
  * Actual number :- 504192
  * Predicted number :- 504182
