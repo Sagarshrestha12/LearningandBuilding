@@ -10,6 +10,8 @@ This project requires Python and the following Python libraries installed:
 * Matplotlib
 * Keras(deeplearning)
 * Opencv
+* Sqlite
+* PyFPDF
 If you do not have Python installed yet, it is highly recommended that you install the python.
 ## IDE USED -  
 * pycharm(for preprocessing image and predictions).
